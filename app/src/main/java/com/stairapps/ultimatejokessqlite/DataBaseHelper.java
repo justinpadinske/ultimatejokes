@@ -84,6 +84,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
+
     }
 
     @Override
@@ -105,4 +106,11 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         super.close();
 
     }
+
+    public SQLiteDatabase getDataBase(){
+        openDataBase();
+        return myDataBase;
+    }
+
+
 }
