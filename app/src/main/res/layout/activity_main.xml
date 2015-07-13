@@ -1,37 +1,30 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:id="@+id/drawer_layout">
+    android:layout_height="match_parent">
 
-<LinearLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    >
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/txtLabel"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"
+            android:textSize="16sp" />
+    </FrameLayout>
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="52dp"></include>
+        android:layout_height="52dp"
+        ></include>
 
-    <TextView
-        android:layout_below="@+id/app_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-</LinearLayout>
-    <fragment
-        android:id="@+id/fragment_navigation_drawer"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:layout="@layout/fragment_navigation_drawer"
-        android:name="com.stairapps.ultimatejokessqlite.NavigationDrawerFragment"
-        tools:layout="@layout/fragment_navigation_drawer" />
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
