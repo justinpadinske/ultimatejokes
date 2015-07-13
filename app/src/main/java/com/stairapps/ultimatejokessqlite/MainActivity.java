@@ -42,8 +42,10 @@ public class MainActivity extends ActionBarActivity {
         setUp(savedInstanceState);
         databaseSetUp();
         manager = getSupportFragmentManager();
+
         JokesFragment jokesFragment = new JokesFragment();
 
+        if(savedInstanceState==null)
         manager.beginTransaction().add(R.id.fragment_container,jokesFragment).addToBackStack(null).commit();
 
 
