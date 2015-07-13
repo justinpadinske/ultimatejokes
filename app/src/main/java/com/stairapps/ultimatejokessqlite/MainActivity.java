@@ -1,8 +1,10 @@
 package com.stairapps.ultimatejokessqlite;
 
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.PersistableBundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -29,10 +31,9 @@ import java.io.IOException;
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-    private DataBaseHelper myDBHelper;
+    private DataBaseHelper DBHelper;
     private Drawer result = null;
-
+    private FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +41,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setUp(savedInstanceState);
         databaseSetUp();
+        manager = getSupportFragmentManager();
+        JokesFragment jokesFragment = new JokesFragment();
 
-        
-
+        manager.beginTransaction().add(R.id.fragment_container,jokesFragment).addToBackStack(null).commit();
 
 
 
@@ -50,14 +52,14 @@ public class MainActivity extends ActionBarActivity {
 
     public void databaseSetUp(){
 
-        myDBHelper = new DataBaseHelper(this);
+        DBHelper = new DataBaseHelper(this);
         try{
-            myDBHelper.createDataBase();
+            DBHelper.createDataBase();
         } catch (IOException e) {
             throw new Error("Unable to create database");
         }
         try {
-            myDBHelper.openDataBase();
+            DBHelper.openDataBase();
         }catch (SQLiteException sqle){
             throw sqle;
         }
@@ -89,19 +91,20 @@ public class MainActivity extends ActionBarActivity {
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
                             case 0:
-                                Toast.makeText(getApplicationContext(), "Jokes", Toast.LENGTH_SHORT).show();
+                                manager.beginTransaction().replace(R.id.fragment_container,new JokesFragment()).commit();
                                 break;
                             case 1:
-                                Toast.makeText(getApplicationContext(), "Pictures", Toast.LENGTH_SHORT).show();
+                                manager.beginTransaction().replace(R.id.fragment_container, new PicturesFragment()).commit();
                                 break;
                             case 2:
-                                Toast.makeText(getApplicationContext(), "Favorites", Toast.LENGTH_SHORT).show();
+                                //TODO IMPLEMENT THIS, I DON'T WANT TO USE ANOTHER FRAGMENT
+                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment()).commit();
                                 break;
                             case 3:
-                                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+                                manager.beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                                 break;
                             default:
-                                Toast.makeText(getApplicationContext(), "App is bugged", Toast.LENGTH_SHORT).show();
+                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment()).commit();
                                 break;
 
                         }
