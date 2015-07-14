@@ -28,4 +28,5 @@ dependencies {
     compile('com.mikepenz:materialdrawer:3.1.2@aar') {
         transitive = true
     }
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 }
