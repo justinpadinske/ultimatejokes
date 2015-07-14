@@ -3,6 +3,7 @@ package com.stairapps.ultimatejokessqlite;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +36,9 @@ public class MainActivity extends ActionBarActivity {
     private Drawer result = null;
     private FragmentManager manager;
 
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,31 +49,30 @@ public class MainActivity extends ActionBarActivity {
 
         JokesFragment jokesFragment = new JokesFragment();
 
-        if(savedInstanceState==null)
-        manager.beginTransaction().add(R.id.fragment_container,jokesFragment).addToBackStack(null).commit();
-
+        if (savedInstanceState == null)
+            manager.beginTransaction().add(R.id.fragment_container, jokesFragment,"HOME").addToBackStack(null).commit();
 
 
     }
 
-    public void databaseSetUp(){
+    public void databaseSetUp() {
 
         DBHelper = new DataBaseHelper(this);
-        try{
+        try {
             DBHelper.createDataBase();
         } catch (IOException e) {
             throw new Error("Unable to create database");
         }
         try {
             DBHelper.openDataBase();
-        }catch (SQLiteException sqle){
+        } catch (SQLiteException sqle) {
             throw sqle;
         }
 
 
     }
 
-    public void setUp(Bundle state){
+    public void setUp(Bundle state) {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -77,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-         result = new DrawerBuilder()
+        result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .addDrawerItems(
@@ -92,7 +95,7 @@ public class MainActivity extends ActionBarActivity {
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
                             case 0:
-                                manager.beginTransaction().replace(R.id.fragment_container,new JokesFragment()).commit();
+                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment(),"HOME").commit();
                                 break;
                             case 1:
                                 manager.beginTransaction().replace(R.id.fragment_container, new PicturesFragment()).commit();
@@ -133,12 +136,23 @@ public class MainActivity extends ActionBarActivity {
         super.onSaveInstanceState(outState);
     }
 
+
     @Override
     public void onBackPressed() {
         if (result != null && result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
-            super.onBackPressed();
+            JokesFragment jk = (JokesFragment) manager.findFragmentByTag("HOME");
+            if(jk!=null && jk.isVisible()) {
+                finish();
+            }
+            else {
+                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment(),"HOME").commit();
+            }
+
         }
+
     }
+
+
 }
