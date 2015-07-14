@@ -80,13 +80,12 @@ public class MainActivity extends ActionBarActivity {
          result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withFullscreen(true)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Jokes").withIdentifier(0),
+                        new PrimaryDrawerItem().withName("Jokes").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Pictures").withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Favorites").withIdentifier(2),
-                        new PrimaryDrawerItem().withName("Settings").withIdentifier(3)
+                        new PrimaryDrawerItem().withName("Pictures").withIdentifier(1).withIcon(R.drawable.ic_insert_photo_black_48dp),
+                        new PrimaryDrawerItem().withName("Favorites").withIdentifier(2).withIcon(R.drawable.ic_favorite_black_48dp),
+                        new PrimaryDrawerItem().withName("Settings").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
