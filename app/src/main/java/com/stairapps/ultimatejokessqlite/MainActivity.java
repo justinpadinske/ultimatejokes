@@ -35,7 +35,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MainActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
-    private DataBaseHelper DBHelper;
+
     private Drawer result = null;
     private FragmentManager manager;
 
@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUp(savedInstanceState);
-        databaseSetUp();
+
         manager = getSupportFragmentManager();
 
         JokesFragment jokesFragment = new JokesFragment();
@@ -58,22 +58,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void databaseSetUp() {
-
-        DBHelper = new DataBaseHelper(this);
-        try {
-            DBHelper.createDataBase();
-        } catch (IOException e) {
-            throw new Error("Unable to create database");
-        }
-        try {
-            DBHelper.openDataBase();
-        } catch (SQLiteException sqle) {
-            throw sqle;
-        }
-
-
-    }
 
     public void setUp(Bundle state) {
 

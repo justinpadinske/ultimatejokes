@@ -1,15 +1,18 @@
 package com.stairapps.ultimatejokessqlite;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class DataBaseHelper extends SQLiteOpenHelper{
 
@@ -112,5 +115,26 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         return myDataBase;
     }
 
+
+    //I think this method is final but I'm not sure
+
+    public ArrayList<String> getJokesByCategory(String category){
+        ArrayList<String> jokes = new ArrayList<>();
+        if(!myDataBase.isOpen())
+            openDataBase();
+        String query = "SELECT joke FROM jokes WHERE category="+"'"+category+"'";
+
+        Cursor c = myDataBase.rawQuery(query,null);
+        c.moveToFirst();
+
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("joke"))!=null){
+                jokes.add(c.getString(c.getColumnIndex("joke")));
+            }
+            c.moveToNext();
+        }
+        myDataBase.close();
+        return jokes;
+    }
 
 }
