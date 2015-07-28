@@ -148,5 +148,9 @@ public class MainActivity extends ActionBarActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(title);
+    }
 
 }

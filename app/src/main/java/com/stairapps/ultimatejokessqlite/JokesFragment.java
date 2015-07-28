@@ -78,15 +78,17 @@ public class JokesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         databaseSetUp();
 
+       
         //Default jokes category
         showJokes(DBHelper.getCategories().get(0));
+        ((MainActivity) getActivity()).setActionBarTitle(DBHelper.getCategories().get(0));
 
         //Swipe and click listeners
 
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                JokesFragment.this.setIndex(getIndex()+1);
+                JokesFragment.this.setIndex(getIndex() + 1);
                 JokesFragment.this.textView.setText(getJokes().get(getIndex()));
             }
         });
@@ -136,6 +138,9 @@ public class JokesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), finalCategories[which],Toast.LENGTH_SHORT).show();
                         showJokes(finalCategories[which]);
+                        ((MainActivity) getActivity()).setActionBarTitle(finalCategories[which]);
+
+
                     }
                 }).show();
                 break;
@@ -151,6 +156,8 @@ public class JokesFragment extends Fragment {
     }
 
     ;
+
+
 
     public void showJokes(String category){
         index=0;
