@@ -1,8 +1,10 @@
 package com.stairapps.ultimatejokessqlite;
 
 
+import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
@@ -76,11 +78,8 @@ public class JokesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         databaseSetUp();
 
-        index=0;
-        jokes = DBHelper.getJokesByCategory("Punny");
-
-
-        textView.setText(jokes.get(index));
+        //Default jokes category
+        showJokes(DBHelper.getCategories().get(0));
 
         //Swipe and click listeners
 
@@ -126,7 +125,20 @@ public class JokesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.sort: break;
+            case R.id.sort:
+                String[] categories = new String[DBHelper.getCategories().size()];
+                categories = DBHelper.getCategories().toArray(categories);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Select a category");
+                final String[] finalCategories = categories;
+                builder.setItems(categories, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), finalCategories[which],Toast.LENGTH_SHORT).show();
+                        showJokes(finalCategories[which]);
+                    }
+                }).show();
+                break;
             case R.id.share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
@@ -139,6 +151,12 @@ public class JokesFragment extends Fragment {
     }
 
     ;
+
+    public void showJokes(String category){
+        index=0;
+        jokes = DBHelper.getJokesByCategory(category);
+        textView.setText(jokes.get(index));
+    }
 
     //Getters and setters to access the variables from the innerclasses
 

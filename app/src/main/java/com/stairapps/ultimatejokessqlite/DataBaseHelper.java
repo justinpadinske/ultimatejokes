@@ -120,8 +120,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
     public ArrayList<String> getJokesByCategory(String category){
         ArrayList<String> jokes = new ArrayList<>();
-        if(!myDataBase.isOpen())
-            openDataBase();
         String query = "SELECT joke FROM jokes WHERE category="+"'"+category+"'";
 
         Cursor c = myDataBase.rawQuery(query,null);
@@ -133,14 +131,12 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             }
             c.moveToNext();
         }
-        myDataBase.close();
+        c.close();
         return jokes;
     }
 
     public ArrayList<String> getCategories(){
         ArrayList<String> categories = new ArrayList<>();
-        if(!myDataBase.isOpen())
-            openDataBase();
         String query = "SELECT category FROM categories";
 
         Cursor c = myDataBase.rawQuery(query,null);
@@ -152,8 +148,10 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             }
             c.moveToNext();
         }
-        myDataBase.close();
+        c.close();
         return categories;
     }
+
+
 
 }
