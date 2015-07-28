@@ -1,15 +1,23 @@
 package com.stairapps.ultimatejokessqlite;
 
 
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ShareActionProvider;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +100,7 @@ public class JokesFragment extends Fragment {
             }
 
             public boolean onSwipeLeft() {
-                JokesFragment.this.setIndex(getIndex()-1);
+                JokesFragment.this.setIndex(getIndex() - 1);
                 JokesFragment.this.textView.setText(getJokes().get(getIndex()));
                 return true;
             }
@@ -102,7 +110,35 @@ public class JokesFragment extends Fragment {
 
     }
 
-  ;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_jokes, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.sort: break;
+            case R.id.share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,textView.getText().toString()+" - Shared via UltimateJokes");
+                startActivity(Intent.createChooser(shareIntent,"Share the joke"));
+                break;
+            case R.id.favorite:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    ;
 
     //Getters and setters to access the variables from the innerclasses
 

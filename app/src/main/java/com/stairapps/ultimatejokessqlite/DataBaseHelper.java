@@ -137,4 +137,23 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         return jokes;
     }
 
+    public ArrayList<String> getCategories(){
+        ArrayList<String> categories = new ArrayList<>();
+        if(!myDataBase.isOpen())
+            openDataBase();
+        String query = "SELECT category FROM categories";
+
+        Cursor c = myDataBase.rawQuery(query,null);
+        c.moveToFirst();
+
+        while (!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("category"))!=null){
+                categories.add(c.getString(c.getColumnIndex("category")));
+            }
+            c.moveToNext();
+        }
+        myDataBase.close();
+        return categories;
+    }
+
 }
