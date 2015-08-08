@@ -234,7 +234,8 @@ public class JokesFragment extends Fragment {
             favoritesEmpty();
         } else {
             Joke joke = jokes.get(index);
-            textView.setText(joke.getmText());
+
+            textView.setText(unescape(joke.getmText()));
             favIconChanger(joke);
         }
     }
@@ -265,7 +266,7 @@ public class JokesFragment extends Fragment {
             //Getting the next joke
             Joke joke = jokes.get(index);
             //Setting the textview text to the joke
-            textView.setText(joke.getmText());
+            textView.setText(unescape(joke.getmText()));
 
             favIconChanger(joke);
         }
@@ -283,7 +284,7 @@ public class JokesFragment extends Fragment {
         } else {
             Joke joke = jokes.get(index);
             //Setting the textview text to the joke
-            textView.setText(joke.getmText());
+            textView.setText(unescape(joke.getmText()));
 
             favIconChanger(joke);
         }
@@ -317,11 +318,15 @@ public class JokesFragment extends Fragment {
             favoritesEmpty();
         } else {
             Joke joke = DBHelper.getJokeByID(id);
-            textView.setText(joke.getmText());
+            textView.setText(unescape(joke.getmText()));
             favIconChanger(joke);
         }
 
     }
 
+    //This is the method that fixes the \n in textview , thanks stackoverflow https://stackoverflow.com/questions/3586763/new-line-character-n-not-displaying-properly-in-textview-android/6005928#6005928
+    private String unescape(String description) {
+        return description.replaceAll("\\\\n", "\\\n");
+    }
 
 }
