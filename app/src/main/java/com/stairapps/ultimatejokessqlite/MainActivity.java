@@ -52,6 +52,9 @@ public class MainActivity extends ActionBarActivity {
 
         JokesFragment jokesFragment = new JokesFragment();
 
+        Bundle argsa= new Bundle();
+        argsa.putInt("favorites", 0);
+        jokesFragment.setArguments(argsa);
         if (savedInstanceState == null)
             manager.beginTransaction().add(R.id.fragment_container, jokesFragment,"HOME").addToBackStack(null).commit();
 
@@ -84,14 +87,23 @@ public class MainActivity extends ActionBarActivity {
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
                             case 0:
-                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment(),"HOME").commit();
+                                JokesFragment a = new JokesFragment();
+                                Bundle argsa= new Bundle();
+                                argsa.putInt("favorites",0);
+                                a.setArguments(argsa);
+                                manager.beginTransaction().replace(R.id.fragment_container, a,"HOME").commit();
                                 break;
                             case 1:
                                 manager.beginTransaction().replace(R.id.fragment_container, new PicturesFragment()).commit();
                                 break;
                             case 2:
                                 //TODO IMPLEMENT THIS, I DON'T WANT TO USE ANOTHER FRAGMENT
-                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment()).commit();
+
+                                Bundle args = new Bundle();
+                                args.putInt("favorites", 1);
+                                JokesFragment j = new JokesFragment();
+                                j.setArguments(args);
+                                manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
                             case 3:
                                 manager.beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();

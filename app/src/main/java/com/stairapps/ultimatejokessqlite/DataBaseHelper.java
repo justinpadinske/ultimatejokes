@@ -14,8 +14,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class DataBaseHelper extends SQLiteOpenHelper{
+public class DataBaseHelper extends SQLiteOpenHelper {
 
+
+    //TODO It never updates the database with new jokes
+    //TODO We have to be careful to not delete users favorites when we update the joke database and fix the bug
 
     private static String DB_PATH = "/data/data/com.stairapps.ultimatejokessqlite/databases/";
     private static String DB_NAME = "jokes";
@@ -23,14 +26,14 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     private final Context myContext;
 
     public DataBaseHelper(Context myContext) {
-        super(myContext,DB_NAME,null,1);
+        super(myContext, DB_NAME, null, 1);
         this.myContext = myContext;
     }
 
-    public void createDataBase() throws IOException{
+    public void createDataBase() throws IOException {
         boolean dbExist = checkDataBase();
-        if(dbExist){}
-        else{
+        if (dbExist) {
+        } else {
             this.getReadableDatabase();
             copyDataBase();
 
@@ -39,26 +42,28 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
     /**
      * Check if the database already exist to avoid re-copying the file each time you open the application.
+     *
      * @return true if it exists, false if it doesn't
      */
 
     private boolean checkDataBase() {
         SQLiteDatabase checkDB = null;
-        try{
+        try {
             String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READONLY);
-        }catch (SQLiteException e){}
-        if(checkDB!=null){
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
+        }
+        if (checkDB != null) {
             checkDB.close();
         }
-        return checkDB !=null ? true : false;
+        return checkDB != null ? true : false;
     }
 
     /**
      * Copies your database from your local assets-folder to the just created empty database in the
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
-     * */
+     */
 
     private void copyDataBase() throws IOException {
         InputStream myInput = myContext.getAssets().open(DB_NAME);
@@ -69,7 +74,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         //transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myInput.read(buffer))>0){
+        while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
 
@@ -103,14 +108,14 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     @Override
     public synchronized void close() {
 
-        if(myDataBase != null)
+        if (myDataBase != null)
             myDataBase.close();
 
         super.close();
 
     }
 
-    public SQLiteDatabase getDataBase(){
+    public SQLiteDatabase getDataBase() {
         openDataBase();
         return myDataBase;
     }
@@ -118,16 +123,16 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
     //I think this method is final but I'm not sure
 
-    public ArrayList<String> getJokesByCategory(String category){
-        ArrayList<String> jokes = new ArrayList<>();
-        String query = "SELECT joke FROM jokes WHERE category="+"'"+category+"'";
+    public ArrayList<Joke> getJokesByCategory(String category) {
+        ArrayList<Joke> jokes = new ArrayList<>();
+        String query = "SELECT * FROM jokes WHERE category=" + "'" + category + "'";
 
-        Cursor c = myDataBase.rawQuery(query,null);
+        Cursor c = myDataBase.rawQuery(query, null);
         c.moveToFirst();
 
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("joke"))!=null){
-                jokes.add(c.getString(c.getColumnIndex("joke")));
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("joke")) != null) {
+                jokes.add(new Joke(c.getString(c.getColumnIndex("joke")), c.getString(c.getColumnIndex("favorited")), c.getInt(c.getColumnIndex("_id"))));
             }
             c.moveToNext();
         }
@@ -135,15 +140,15 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         return jokes;
     }
 
-    public ArrayList<String> getCategories(){
+    public ArrayList<String> getCategories() {
         ArrayList<String> categories = new ArrayList<>();
         String query = "SELECT category FROM categories";
 
-        Cursor c = myDataBase.rawQuery(query,null);
+        Cursor c = myDataBase.rawQuery(query, null);
         c.moveToFirst();
 
-        while (!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("category"))!=null){
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("category")) != null) {
                 categories.add(c.getString(c.getColumnIndex("category")));
             }
             c.moveToNext();
@@ -153,5 +158,46 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     }
 
 
+    public void setFavorite(int id) {
+        this.getWritableDatabase().execSQL("UPDATE jokes SET favorited = 'true' WHERE _id='" + id + "'");
+
+    }
+
+    public boolean isFavorited(int id) {
+        Cursor c = myDataBase.rawQuery("SELECT favorited FROM jokes WHERE _id=" + id, null);
+        c.moveToFirst();
+        if (c.getString(c.getColumnIndex("favorited")) != null)
+            return true;
+        return false;
+    }
+
+    public void unFavorite(int id) {
+        this.getWritableDatabase().execSQL("UPDATE jokes SET favorited = null WHERE _id='" + id + "'");
+    }
+
+    public ArrayList<Joke> getFavorites() {
+        ArrayList<Joke> jokes = new ArrayList<>();
+        String query = "SELECT * FROM jokes WHERE favorited = 'true'";
+
+        Cursor c = myDataBase.rawQuery(query, null);
+        c.moveToFirst();
+
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("joke")) != null) {
+                jokes.add(new Joke(c.getString(c.getColumnIndex("joke")), c.getString(c.getColumnIndex("favorited")), c.getInt(c.getColumnIndex("_id"))));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        return jokes;
+    }
+
+
+    public Joke getJokeByID(int id) {
+        String query = "SELECT * FROM jokes WHERE _id = " + id;
+        Cursor c = myDataBase.rawQuery(query, null);
+        c.moveToFirst();
+        return new Joke(c.getString(c.getColumnIndex("joke")), c.getString(c.getColumnIndex("favorited")), c.getInt(c.getColumnIndex("_id")));
+    }
 
 }
