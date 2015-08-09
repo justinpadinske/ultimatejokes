@@ -64,16 +64,7 @@ public class JokesFragment extends Fragment {
 
         //Creating a DataBaseHelper object, getting the context from the main activity
         DBHelper = new DataBaseHelper(this.getActivity());
-        try {
-            DBHelper.createDataBase();
-        } catch (IOException e) {
-            throw new Error("Unable to create database");
-        }
-        try {
-            DBHelper.openDataBase();
-        } catch (SQLiteException sqle) {
-            throw sqle;
-        }
+        DBHelper.setMyDataBase();
 
 
     }
