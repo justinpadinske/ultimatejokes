@@ -3,6 +3,7 @@ package com.stairapps.ultimatejokessqlite;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -27,8 +28,16 @@ public class DataBaseHelper extends SQLiteAssetHelper {
     //I think this method is final but I'm not sure
 
     public ArrayList<Joke> getJokesByCategory(String category) {
+        String query;
         ArrayList<Joke> jokes = new ArrayList<>();
-        String query = "SELECT * FROM jokes WHERE category=" + "'" + category + "'";
+        if(!category.toLowerCase().contains("all")) {
+             query = "SELECT * FROM jokes WHERE category=" + "'" + category + "'";
+            Log.d("DBHelper","notall");
+        }
+        else {
+            query = "SELECT * FROM jokes";
+            Log.d("DBHelper","all");
+        }
         Cursor c = myDataBase.rawQuery(query, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {

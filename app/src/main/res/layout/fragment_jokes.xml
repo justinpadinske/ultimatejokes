@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stairapps.ultimatejokessqlite.JokesFragment"
+    tools:context="com.stairapps.ultimatejokessqlite.fragments.JokesFragment"
     android:id="@+id/screen">
 
 
@@ -10,7 +10,6 @@
         android:gravity="center"
         android:textColor="#000"
         android:textSize="16sp"
-        android:maxLines="5"
         android:scrollbars="vertical"
         android:id="@+id/jokeText"/>
 

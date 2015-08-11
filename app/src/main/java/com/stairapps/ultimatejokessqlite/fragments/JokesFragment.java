@@ -1,4 +1,4 @@
-package com.stairapps.ultimatejokessqlite;
+package com.stairapps.ultimatejokessqlite.fragments;
 
 
 import android.app.AlertDialog;
@@ -26,8 +26,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.stairapps.ultimatejokessqlite.DataBaseHelper;
+import com.stairapps.ultimatejokessqlite.Joke;
+import com.stairapps.ultimatejokessqlite.MainActivity;
+import com.stairapps.ultimatejokessqlite.OnSwipeTouchListener;
+import com.stairapps.ultimatejokessqlite.R;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class JokesFragment extends Fragment {
@@ -77,7 +84,7 @@ public class JokesFragment extends Fragment {
 
         //Setting the actionbar title for the initial screen
 
-        ((MainActivity) getActivity()).setActionBarTitle(DBHelper.getCategories().get(0));
+        ((MainActivity) getActivity()).setActionBarTitle("All");
 
         //Swipe and click listeners
 
@@ -117,7 +124,7 @@ public class JokesFragment extends Fragment {
         inflater.inflate(R.menu.menu_jokes, menu);
         this.menu = menu;
         //I need to use the showJokes method here to make sure it is ran after the menu is created
-        showJokes(DBHelper.getCategories().get(0));
+        showJokes("All");
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -137,6 +144,7 @@ public class JokesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // Toast.makeText(getActivity(), finalCategories[which],Toast.LENGTH_SHORT).show();
                         showJokes(finalCategories[which]);
+                        Log.d("JF",finalCategories[which]);
                         ((MainActivity) getActivity()).setActionBarTitle(finalCategories[which]);
 
 
@@ -224,6 +232,7 @@ public class JokesFragment extends Fragment {
         if (jokes.isEmpty()) {
             favoritesEmpty();
         } else {
+            Collections.shuffle(jokes);
             Joke joke = jokes.get(index);
 
             textView.setText(unescape(joke.getmText()));
