@@ -16,7 +16,6 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.stairapps.ultimatejokessqlite.fragments.JokesFragment;
-import com.stairapps.ultimatejokessqlite.fragments.PicturesFragment;
 import com.stairapps.ultimatejokessqlite.fragments.SettingsFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -68,9 +67,8 @@ public class MainActivity extends ActionBarActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Jokes").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Pictures").withIdentifier(1).withIcon(R.drawable.ic_insert_photo_black_48dp),
-                        new PrimaryDrawerItem().withName("Favorites").withIdentifier(2).withIcon(R.drawable.ic_favorite_black_48dp),
-                        new PrimaryDrawerItem().withName("Settings").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
+                        new PrimaryDrawerItem().withName("Favorites").withIdentifier(1).withIcon(R.drawable.ic_favorite_black_48dp),
+                        new PrimaryDrawerItem().withName("Settings").withIdentifier(2).withIcon(R.drawable.ic_settings_black_48dp)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -84,18 +82,13 @@ public class MainActivity extends ActionBarActivity {
                                 manager.beginTransaction().replace(R.id.fragment_container, a,"HOME").commit();
                                 break;
                             case 1:
-                                manager.beginTransaction().replace(R.id.fragment_container, new PicturesFragment()).commit();
-                                break;
-                            case 2:
-                                //TODO IMPLEMENT THIS, I DON'T WANT TO USE ANOTHER FRAGMENT
-
                                 Bundle args = new Bundle();
                                 args.putInt("favorites", 1);
                                 JokesFragment j = new JokesFragment();
                                 j.setArguments(args);
                                 manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
-                            case 3:
+                            case 2:
                                 manager.beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                                 break;
                             default:
