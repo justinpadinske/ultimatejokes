@@ -24,6 +24,21 @@ public class DataBaseHelper extends SQLiteAssetHelper {
 
     }
 
+    public static int getDatabaseVersion() {
+        return DATABASE_VERSION;
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        int upgradeTo = oldVersion+1;
+        while(upgradeTo<=newVersion){
+            switch (upgradeTo) {
+
+            }
+            upgradeTo++;
+
+        }
+    }
 
     //I think this method is final but I'm not sure
 

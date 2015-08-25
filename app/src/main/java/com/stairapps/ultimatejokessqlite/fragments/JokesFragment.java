@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -48,6 +48,9 @@ public class JokesFragment extends Fragment {
     private Menu menu;
     private boolean f;
 
+    /**
+     * Firstly I set up the database then generate an arraylist from the database with the jokes
+     */
 
     public JokesFragment() {
 
@@ -117,6 +120,7 @@ public class JokesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Log.d("DB", String.valueOf(DBHelper.getDatabaseVersion()));
     }
 
     @Override
@@ -124,6 +128,7 @@ public class JokesFragment extends Fragment {
         inflater.inflate(R.menu.menu_jokes, menu);
         this.menu = menu;
         //I need to use the showJokes method here to make sure it is ran after the menu is created
+        //Here it shows the jokes for the first time
         showJokes("All");
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -208,6 +213,12 @@ public class JokesFragment extends Fragment {
 
 
     //Show jokes from a specific category
+
+    /**
+     *  Here I work with the bundle that i passed in the MainActivity to see if the user wanted favorites or not
+     *  If the bundle int is 1 the it means that the users selected the favorite fragment
+     *
+     */
     public void showJokes(String category) {
         index = 0;
 
