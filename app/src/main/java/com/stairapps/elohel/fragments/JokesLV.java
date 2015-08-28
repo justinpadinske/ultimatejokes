@@ -1,12 +1,8 @@
-package com.stairapps.ultimatejokessqlite.fragments;
+package com.stairapps.elohel.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stairapps.ultimatejokessqlite.DataBaseHelper;
-import com.stairapps.ultimatejokessqlite.Joke;
-import com.stairapps.ultimatejokessqlite.MainActivity;
-import com.stairapps.ultimatejokessqlite.R;
-import com.stairapps.ultimatejokessqlite.RVAdapter;
+import com.stairapps.elohel.DataBaseHelper;
+import com.stairapps.elohel.Joke;
+import com.stairapps.elohel.MainActivity;
+import com.stairapps.elohel.R;
+import com.stairapps.elohel.RVAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,10 +119,11 @@ public class JokesLV extends Fragment {
     public void showJokes(String category) {
             jokes = DBHelper.getJokesByCategory(category);
             Collections.shuffle(jokes); //This is done to always have a new order of the jokes
-            RVAdapter adapter=new RVAdapter(jokes);//Creating the adapter for the RecylcerView
+            RVAdapter adapter=new RVAdapter(jokes,DBHelper);//Creating the adapter for the RecylcerView
             rv.setAdapter(adapter);
         }
 
-
-
+    public DataBaseHelper getDBHelper() {
+        return DBHelper;
+    }
 }

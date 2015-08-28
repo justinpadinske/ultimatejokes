@@ -1,10 +1,10 @@
-package com.stairapps.ultimatejokessqlite.fragments;
+package com.stairapps.elohel.fragments;
 
 import android.os.Bundle;
 
 import android.preference.PreferenceFragment;
 
-import com.stairapps.ultimatejokessqlite.R;
+import com.stairapps.elohel.R;
 
 
 public class SettingsFragment extends PreferenceFragment {

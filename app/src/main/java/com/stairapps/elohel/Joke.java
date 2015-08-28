@@ -1,4 +1,4 @@
-package com.stairapps.ultimatejokessqlite;
+package com.stairapps.elohel;
 
 /**
  * Created by tepes on 8/7/2015.

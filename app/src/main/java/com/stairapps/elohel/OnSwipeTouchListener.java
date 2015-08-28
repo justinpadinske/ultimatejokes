@@ -1,4 +1,4 @@
-package com.stairapps.ultimatejokessqlite;
+package com.stairapps.elohel;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

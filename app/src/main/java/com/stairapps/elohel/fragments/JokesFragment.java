@@ -1,38 +1,27 @@
-package com.stairapps.ultimatejokessqlite.fragments;
+package com.stairapps.elohel.fragments;
 
 
 import android.app.AlertDialog;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ShareActionProvider;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
-import com.stairapps.ultimatejokessqlite.DataBaseHelper;
-import com.stairapps.ultimatejokessqlite.Joke;
-import com.stairapps.ultimatejokessqlite.MainActivity;
-import com.stairapps.ultimatejokessqlite.OnSwipeTouchListener;
-import com.stairapps.ultimatejokessqlite.R;
+import com.stairapps.elohel.DataBaseHelper;
+import com.stairapps.elohel.Joke;
+import com.stairapps.elohel.MainActivity;
+import com.stairapps.elohel.OnSwipeTouchListener;
+import com.stairapps.elohel.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -159,7 +148,7 @@ public class JokesFragment extends Fragment {
             case R.id.share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, textView.getText().toString() + " - Shared via UltimateJokes");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, textView.getText().toString() + " - Shared via El Oh El");
                 startActivity(Intent.createChooser(shareIntent, "Share the joke"));
                 break;
             case R.id.favorite:

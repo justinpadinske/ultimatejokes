@@ -1,9 +1,7 @@
-package com.stairapps.ultimatejokessqlite;
+package com.stairapps.elohel;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +14,8 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.stairapps.ultimatejokessqlite.fragments.JokesFragment;
-import com.stairapps.ultimatejokessqlite.fragments.JokesLV;
-import com.stairapps.ultimatejokessqlite.fragments.SettingsFragment;
+import com.stairapps.elohel.fragments.JokesFragment;
+import com.stairapps.elohel.fragments.JokesLV;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

@@ -1,4 +1,4 @@
-package com.stairapps.ultimatejokessqlite;
+package com.stairapps.elohel;
 
 import android.content.Context;
 import android.database.Cursor;
