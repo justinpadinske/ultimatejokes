@@ -16,6 +16,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.stairapps.elohel.fragments.JokesFragment;
 import com.stairapps.elohel.fragments.JokesLV;
+import com.stairapps.elohel.fragments.SettingsFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -96,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
                                 manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
                             case 2:
-                              //  manager.beginTransaction().replace(R.id.fragment_container,new SettingsFragment()).commit();
+                                manager.beginTransaction().replace(R.id.fragment_container,new SettingsFragment()).commit();
                                 break;
                             default:
                                 manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment()).commit();

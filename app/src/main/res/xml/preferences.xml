@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:title="Layout"
         android:summary="Show the jokes in a list"
         android:key="list_mode"
         android:defaultValue="true"
-        ></CheckBoxPreference>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ></SwitchPreference>
+
 
 </PreferenceScreen>

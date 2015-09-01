@@ -8,7 +8,7 @@
     <style name="AppTheme.Base" parent="MaterialDrawerTheme.Light">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
-        <item name="colorAccent">@color/accentColor
+        <item name="colorAccent">@color/accentColor</item>
             <!-- MaterialDrawer specific values -->
             <item name="material_drawer_background">@color/material_drawer_background</item>
             <item name="material_drawer_icons">@color/material_drawer_icons</item>
@@ -21,10 +21,6 @@
             <item name="material_drawer_selected_text">@color/material_drawer_selected_text</item>
             <item name="material_drawer_header_selection_text">@color/material_drawer_header_selection_text</item>
             <item name="windowActionModeOverlay">true</item>
-            <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-            <item name="android:statusBarColor">@android:color/transparent</item>
-
-        </item>
 
 
     </style>
