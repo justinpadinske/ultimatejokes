@@ -1,13 +1,19 @@
-package com.stairapps.elohel;
+package com.stairapps.elohel.adapters;
 
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.stairapps.elohel.Joke;
+import com.stairapps.elohel.R;
+import com.stairapps.elohel.database.SQLController;
+import com.stairapps.elohel.fragments.JokesLV;
 
 import java.util.ArrayList;
 
@@ -16,11 +22,12 @@ import java.util.ArrayList;
  */
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.JokesViewHolder>{
 
-    ArrayList<Joke> jokes;
-    DataBaseHelper DBHelper;
-    public RVAdapter(ArrayList<Joke> jokes, DataBaseHelper db){
+    protected ArrayList<Joke> jokes;
+    protected SQLController dbcon;
+
+    public RVAdapter(ArrayList<Joke> jokes, SQLController db){
         this.jokes = jokes;
-        DBHelper = db;
+        dbcon = db;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.JokesViewHolder>{
     @Override
     public void onBindViewHolder(final JokesViewHolder holder, final int position) {
 
-        holder.jokeText.setText(unescape(jokes.get(position).getmText()));
+        holder.jokeText.setText(unescape(jokes.get(position).getJoke()));
         holder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,22 +51,28 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.JokesViewHolder>{
             }
         });
 
-        if(DBHelper.isFavorited(jokes.get(position).getmId()))
+        if(jokes.get(position).isFavoriteStatus())
             holder.favButton.setBackgroundResource(R.drawable.ic_favorite_black_48dp);
-        else
-            holder.favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+
 
         holder.favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = jokes.get(position).getmId();
-                if(DBHelper.isFavorited(id)){
-                    DBHelper.unFavorite(id);
+                int id = jokes.get(position).getId();
+                if(dbcon.isFavorited(id)){
+                    Log.d("tes","test");
+                    dbcon.unFavorite(id);
+                    jokes.get(position).setFavoriteStatus(false);
                     holder.favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                    notifyItemChanged(position);
                 }else {
-                    DBHelper.setFavorite(id);
+                    Log.d("tes","test");
+                    dbcon.setFavorite(id);
+                    jokes.get(position).setFavoriteStatus(true);
                     holder.favButton.setBackgroundResource(R.drawable.ic_favorite_black_48dp);
+                    notifyItemChanged(position);
                 }
+                notifyDataSetChanged();
             }
         });
     }
@@ -89,7 +102,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.JokesViewHolder>{
     }
 
     //This is used to fix the \n bug
-    private String unescape(String description) {
+    protected String unescape(String description) {
         return description.replaceAll("\\\\n", "\\\n");
     }
 }

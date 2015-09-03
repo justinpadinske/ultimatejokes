@@ -2,6 +2,7 @@ package com.stairapps.elohel.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,20 +15,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stairapps.elohel.DataBaseHelper;
 import com.stairapps.elohel.Joke;
 import com.stairapps.elohel.MainActivity;
 import com.stairapps.elohel.R;
-import com.stairapps.elohel.RVAdapter;
+import com.stairapps.elohel.adapters.RVAdapter;
+import com.stairapps.elohel.database.SQLController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class JokesLV extends Fragment {
 
-    private DataBaseHelper DBHelper;
-    private RecyclerView rv;
-    private ArrayList<Joke> jokes;
+    protected SQLController dbcon;
+    protected RecyclerView rv;
+    protected ArrayList<Joke> jokes;
     private Menu menu;
 
     @Override
@@ -54,9 +56,13 @@ public class JokesLV extends Fragment {
 
     public void databaseSetUp() {
         //Setting up the database
-        //Creating a DataBaseHelper object, getting the context from the main activity
-        DBHelper = new DataBaseHelper(this.getActivity());
-        DBHelper.setMyDataBase();
+        //Creating a DatabaseHelper object, getting the context from the main activity
+        dbcon = new SQLController(getActivity());
+        try {
+            dbcon.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -89,8 +95,8 @@ public class JokesLV extends Fragment {
         switch (item.getItemId()) {
             case R.id.sort:
                 //Getting the categories from the DB
-                String[] categories = new String[DBHelper.getCategories().size()];
-                categories = DBHelper.getCategories().toArray(categories);
+                String[] categories = new String[dbcon.getCategories().size()];
+                categories = dbcon.getCategories().toArray(categories);
                 //Creating the AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Select a category");
@@ -117,13 +123,27 @@ public class JokesLV extends Fragment {
 
     //Show jokes from a specific category
     public void showJokes(String category) {
-            jokes = DBHelper.getJokesByCategory(category);
-            Collections.shuffle(jokes); //This is done to always have a new order of the jokes
-            RVAdapter adapter=new RVAdapter(jokes,DBHelper);//Creating the adapter for the RecylcerView
+            jokes = new ArrayList<>();
+            parseJokes(dbcon.getJokes(category));
+            RVAdapter adapter=new RVAdapter(jokes,dbcon);//Creating the adapter for the RecylcerView
             rv.setAdapter(adapter);
         }
 
-    public DataBaseHelper getDBHelper() {
-        return DBHelper;
+    public void parseJokes(Cursor c){
+        jokes.clear();
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("joke")) != null) {
+                Joke joke = new Joke();
+                joke.setId(c.getInt(c.getColumnIndex("_id")));
+                joke.setCategory(c.getString(c.getColumnIndex("category")));
+                joke.setFavoriteStatus(dbcon.isFavorited(joke.getId()));
+                joke.setJoke(c.getString(c.getColumnIndex("joke")));
+                jokes.add(joke);
+            }
+            c.moveToNext();
+        }
+        Collections.shuffle(jokes);
     }
+
+
 }

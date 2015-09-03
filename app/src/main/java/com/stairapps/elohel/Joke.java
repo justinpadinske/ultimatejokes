@@ -5,35 +5,54 @@ package com.stairapps.elohel;
  */
 public class Joke {
 
-    private String mText;
-    private boolean mFavorited;
-    private int mId;
-    public Joke(String text, String f,int id){
-        mText=text;
-        if(f != null)
-        mFavorited = true;
-        else
-            mFavorited = false;
-        mId = id;
+    int id;
+    String joke;
+    boolean favoriteStatus;
+    String category;
+
+
+    public Joke(){
+
     }
 
-    public String getmText() {
-        return mText;
+    public Joke(int id, String joke, boolean favoriteStatus, String category) {
+        this.id = id;
+        this.joke = joke;
+        this.favoriteStatus = favoriteStatus;
+        this.category = category;
     }
 
-    public void setmText(String mText) {
-        this.mText = mText;
+    //Getters and Setters
+
+    public int getId() {
+        return id;
     }
 
-    public boolean ismFavorited() {
-        return mFavorited;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setmFavorited(boolean mFavorited) {
-        this.mFavorited = mFavorited;
+    public String getJoke() {
+        return joke;
     }
 
-    public int getmId() {
-        return mId;
+    public void setJoke(String joke) {
+        this.joke = joke;
+    }
+
+    public boolean isFavoriteStatus() {
+        return favoriteStatus;
+    }
+
+    public void setFavoriteStatus(boolean favoriteStatus) {
+        this.favoriteStatus = favoriteStatus;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

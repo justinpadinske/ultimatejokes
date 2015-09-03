@@ -1,7 +1,11 @@
 package com.stairapps.elohel;
 
 
+import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,8 +18,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.stairapps.elohel.fragments.JokesFragment;
+import com.stairapps.elohel.fragments.FavoritesFragment;
 import com.stairapps.elohel.fragments.JokesLV;
+import com.stairapps.elohel.fragments.JokesSimple;
 import com.stairapps.elohel.fragments.SettingsFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -28,8 +33,8 @@ public class MainActivity extends ActionBarActivity {
     private Drawer result = null;
     //I'm not sure if we should use the support library or not
     private android.app.FragmentManager manager;
-
-
+    private SharedPreferences sharedPreferences;
+    private boolean listMode;
     /**
      * I use a bundle and pass an extra int when switching fragments to check if the users want the favorites or all the jokes
      * You can see it belown in the setUp method
@@ -43,17 +48,21 @@ public class MainActivity extends ActionBarActivity {
         setUp(savedInstanceState);
 
         manager = getFragmentManager();
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        listMode = sharedPreferences.getBoolean("list_mode",true);
         /**
          * Showing the home screen
          */
-        JokesFragment jokesFragment = new JokesFragment();
 
-        Bundle bundle= new Bundle();
-        bundle.putInt("favorites", 0);
-        jokesFragment.setArguments(bundle);
+        Fragment a;
+        if(listMode) {
+            a = new JokesLV();
+        }else {
+            a = new JokesSimple();
+        }
+
         if (savedInstanceState == null)
-            manager.beginTransaction().add(R.id.fragment_container, jokesFragment,"HOME").addToBackStack(null).commit();
+            manager.beginTransaction().add(R.id.fragment_container, a,"HOME").addToBackStack(null).commit();
 
 
     }
@@ -83,24 +92,22 @@ public class MainActivity extends ActionBarActivity {
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                         switch (drawerItem.getIdentifier()) {
                             case 0:
-                                JokesLV a = new JokesLV();
-                                Bundle bundle= new Bundle();
-                                bundle.putInt("favorites",0);
-                                a.setArguments(bundle);
+                                updateListMode();
+                                Fragment a;
+                                if(listMode) {
+                                    a = new JokesLV();
+                                }else {
+                                    a = new JokesSimple();
+                                }
                                 manager.beginTransaction().replace(R.id.fragment_container, a,"HOME").commit();
                                 break;
                             case 1:
-                                Bundle args = new Bundle();
-                                args.putInt("favorites", 1);
-                                JokesFragment j = new JokesFragment();
-                                j.setArguments(args);
+                                updateListMode();
+                                FavoritesFragment j = new FavoritesFragment();
                                 manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
                             case 2:
                                 manager.beginTransaction().replace(R.id.fragment_container,new SettingsFragment()).commit();
-                                break;
-                            default:
-                                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment()).commit();
                                 break;
 
                         }
@@ -122,13 +129,13 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
+/*
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState = result.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
-
+*/
 
     /**
      * Implemented the code to close the drawer on back press
@@ -138,12 +145,12 @@ public class MainActivity extends ActionBarActivity {
         if (result != null && result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
-            JokesFragment jk = (JokesFragment) manager.findFragmentByTag("HOME");
+            JokesSimple jk = (JokesSimple) manager.findFragmentByTag("HOME");
             if(jk!=null && jk.isVisible()) {
                 finish();
             }
             else {
-                manager.beginTransaction().replace(R.id.fragment_container, new JokesFragment(),"HOME").commit();
+                manager.beginTransaction().replace(R.id.fragment_container, new JokesSimple(),"HOME").commit();
             }
 
         }
@@ -163,6 +170,10 @@ public class MainActivity extends ActionBarActivity {
     public void setActionBarTitle(String title){
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(title);
+    }
+
+    public void updateListMode(){
+        listMode = sharedPreferences.getBoolean("list_mode",true);
     }
 
 }

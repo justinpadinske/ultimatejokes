@@ -1,4 +1,4 @@
-package com.stairapps.elohel;
+package com.stairapps.elohel.extra;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

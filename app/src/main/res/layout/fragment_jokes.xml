@@ -1,16 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stairapps.elohel.fragments.JokesFragment"
-    android:id="@+id/screen">
+    tools:context="com.stairsapps.elohel.fragments.JokesSimple"
+    android:id="@+id/relativeLayout"
+    android:background="@color/md_white_1000">
 
 
-  z  <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Jokes"
-        android:gravity="center"
-        android:textColor="#000"
-        android:textSize="16sp"
-        android:scrollbars="vertical"
-        android:id="@+id/jokeText"/>
+    <ProgressBar
+        android:id="@+id/myProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="false"
+        android:max="60"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular" />
 
-</FrameLayout>
+    <TextSwitcher
+        android:id="@+id/textSwitcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="22dp"
+        android:paddingRight="22dp">
+        <TextView
+            android:id="@+id/firtTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbarStyle="insideInset"
+            android:maxLines="8"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center">
+        </TextView>
+        <TextView
+            android:id="@+id/secTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbarStyle="insideInset"
+            android:maxLines="8"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+        </TextView>
+   </TextSwitcher>
+
+
+</RelativeLayout>

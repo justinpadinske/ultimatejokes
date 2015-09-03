@@ -1,6 +1,8 @@
-package com.stairapps.elohel;
+package com.stairapps.elohel.extra;
 
 import android.app.Application;
+
+import com.stairapps.elohel.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
