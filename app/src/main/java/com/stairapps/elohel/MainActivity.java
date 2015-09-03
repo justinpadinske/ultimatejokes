@@ -4,7 +4,6 @@ package com.stairapps.elohel;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,6 +21,8 @@ import com.stairapps.elohel.fragments.FavoritesFragment;
 import com.stairapps.elohel.fragments.JokesLV;
 import com.stairapps.elohel.fragments.JokesSimple;
 import com.stairapps.elohel.fragments.SettingsFragment;
+
+import org.acra.ACRA;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -53,6 +54,8 @@ public class MainActivity extends ActionBarActivity {
         /**
          * Showing the home screen
          */
+
+
 
         Fragment a;
         if(listMode) {
@@ -175,5 +178,7 @@ public class MainActivity extends ActionBarActivity {
     public void updateListMode(){
         listMode = sharedPreferences.getBoolean("list_mode",true);
     }
+
+
 
 }

@@ -29,7 +29,7 @@ public class SQLController {
     }
 
     public SQLController open() throws SQLException {
-        DBHelper = new DatabaseHelper(context);
+        DBHelper = DBHelper.getInstance(context);
         database = DBHelper.getWritableDatabase();
         return this;
     }

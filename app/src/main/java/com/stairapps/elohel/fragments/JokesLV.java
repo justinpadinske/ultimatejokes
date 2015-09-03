@@ -142,6 +142,7 @@ public class JokesLV extends Fragment {
             }
             c.moveToNext();
         }
+        c.close();
         Collections.shuffle(jokes);
     }
 

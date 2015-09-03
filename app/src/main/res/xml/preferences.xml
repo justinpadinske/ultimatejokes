@@ -10,5 +10,21 @@
         android:layout_height="wrap_content"
         ></SwitchPreference>
 
+    <SwitchPreference
+        android:title="Notifications"
+        android:summary="Get a daily random joke"
+        android:key="notification_status"
+        android:defaultValue="false"
+        ></SwitchPreference>
+
+
+    <EditTextPreference
+        android:defaultValue="13:00"
+        android:key="notificatin_time"
+        android:dependency="notification_status"
+        android:title="Joke time"
+        android:summary="When to receive the daily joke"
+        />
+
 
 </PreferenceScreen>

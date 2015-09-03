@@ -127,6 +127,7 @@ public class JokesSimple extends Fragment {
             }
             c.moveToNext();
         }
+        c.close();
         Collections.shuffle(mJokes);
     }
 
