@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.stairapps.elohel.R;
 
-import org.acra.ACRA;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

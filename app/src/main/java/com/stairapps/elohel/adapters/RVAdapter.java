@@ -53,20 +53,21 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.JokesViewHolder>{
 
         if(jokes.get(position).isFavoriteStatus())
             holder.favButton.setBackgroundResource(R.drawable.ic_favorite_black_48dp);
-
+        else
+            holder.favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
 
         holder.favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int id = jokes.get(position).getId();
                 if(dbcon.isFavorited(id)){
-                    Log.d("tes","test");
+                    Log.d("tes","test1");
                     dbcon.unFavorite(id);
                     jokes.get(position).setFavoriteStatus(false);
                     holder.favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
                     notifyItemChanged(position);
                 }else {
-                    Log.d("tes","test");
+                    Log.d("tes","test2");
                     dbcon.setFavorite(id);
                     jokes.get(position).setFavoriteStatus(true);
                     holder.favButton.setBackgroundResource(R.drawable.ic_favorite_black_48dp);

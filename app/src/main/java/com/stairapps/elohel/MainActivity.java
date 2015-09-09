@@ -18,11 +18,11 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.stairapps.elohel.fragments.FavoritesFragment;
+import com.stairapps.elohel.fragments.JokePurpose;
 import com.stairapps.elohel.fragments.JokesLV;
 import com.stairapps.elohel.fragments.JokesSimple;
 import com.stairapps.elohel.fragments.SettingsFragment;
 
-import org.acra.ACRA;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (savedInstanceState == null)
-            manager.beginTransaction().add(R.id.fragment_container, a,"HOME").addToBackStack(null).commit();
+            manager.beginTransaction().add(R.id.fragment_container,a,"HOME").addToBackStack(null).commit();
 
 
     }
@@ -88,8 +88,9 @@ public class MainActivity extends ActionBarActivity {
                         new PrimaryDrawerItem().withName("Jokes").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Favorites").withIdentifier(1).withIcon(R.drawable.ic_favorite_black_48dp),
-                        new PrimaryDrawerItem().withName("Settings").withIdentifier(2).withIcon(R.drawable.ic_settings_black_48dp)
-                )
+                        new PrimaryDrawerItem().withName("Purpose a joke").withIdentifier(2).withIcon(R.drawable.emoticon),
+                        new PrimaryDrawerItem().withName("Settings").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
+        )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
@@ -110,6 +111,9 @@ public class MainActivity extends ActionBarActivity {
                                 manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
                             case 2:
+                                manager.beginTransaction().replace(R.id.fragment_container,new JokePurpose()).commit();
+                                break;
+                            case  3:
                                 manager.beginTransaction().replace(R.id.fragment_container,new SettingsFragment()).commit();
                                 break;
 
