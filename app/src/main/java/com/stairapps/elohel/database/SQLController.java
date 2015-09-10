@@ -7,6 +7,7 @@ package com.stairapps.elohel.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.stairapps.elohel.Joke;
 
@@ -103,6 +104,7 @@ public class SQLController {
     public Joke getJoke(int id) {
 
         String query = "SELECT * FROM jokes WHERE _id = " + id;
+        Log.i("DB", String.valueOf(database.isOpen()));
         Cursor c = database.rawQuery(query, null);
         c.moveToFirst();
         Joke joke = new Joke();
@@ -111,6 +113,23 @@ public class SQLController {
         joke.setFavoriteStatus(this.isFavorited(id));
         joke.setJoke(c.getString(c.getColumnIndex("joke")));
         return joke;
+    }
+
+
+    public int getMaxId()
+    {
+        String query = "SELECT MAX(_id) AS max_id FROM jokes";
+        Cursor cursor = database.rawQuery(query,null);
+
+        int id = 0;
+        if (cursor.moveToFirst())
+        {
+            do
+            {
+                id = cursor.getInt(0);
+            } while(cursor.moveToNext());
+        }
+        return id;
     }
 
 

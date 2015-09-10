@@ -2,8 +2,8 @@ package com.stairapps.elohel.fragments;
 
 import android.os.Bundle;
 
-import android.preference.PreferenceFragment;
 
+import com.github.machinarius.preferencefragment.PreferenceFragment;
 import com.stairapps.elohel.R;
 
 

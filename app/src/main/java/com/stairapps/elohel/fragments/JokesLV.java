@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 
 import com.stairapps.elohel.Joke;
 import com.stairapps.elohel.MainActivity;
@@ -24,6 +25,10 @@ import com.stairapps.elohel.database.SQLController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import jp.wasabeef.recyclerview.animators.OvershootInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 public class JokesLV extends Fragment {
 
@@ -126,7 +131,10 @@ public class JokesLV extends Fragment {
             jokes = new ArrayList<>();
             parseJokes(dbcon.getJokes(category));
             RVAdapter adapter=new RVAdapter(jokes,dbcon);//Creating the adapter for the RecylcerView
-            rv.setAdapter(adapter);
+        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(adapter);
+        scaleInAnimationAdapter.setFirstOnly(false);
+            rv.setAdapter(scaleInAnimationAdapter);
+
         }
 
     public void parseJokes(Cursor c){

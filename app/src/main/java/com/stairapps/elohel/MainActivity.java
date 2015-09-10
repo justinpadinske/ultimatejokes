@@ -1,28 +1,45 @@
 package com.stairapps.elohel;
 
 
-import android.app.Fragment;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.stairapps.elohel.database.SQLController;
 import com.stairapps.elohel.fragments.FavoritesFragment;
 import com.stairapps.elohel.fragments.JokePurpose;
 import com.stairapps.elohel.fragments.JokesLV;
 import com.stairapps.elohel.fragments.JokesSimple;
 import com.stairapps.elohel.fragments.SettingsFragment;
 
+
+import java.sql.SQLException;
+import java.util.Random;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -33,9 +50,18 @@ public class MainActivity extends ActionBarActivity {
 
     private Drawer result = null;
     //I'm not sure if we should use the support library or not
-    private android.app.FragmentManager manager;
+    private FragmentManager manager;
     private SharedPreferences sharedPreferences;
     private boolean listMode;
+
+
+    //used for register alarm manager
+    PendingIntent pendingIntent;
+    //used to store running alarmmanager instance
+    AlarmManager alarmManager;
+    //Callback function for Alarmmanager event
+    BroadcastReceiver mReceiver;
+
     /**
      * I use a bundle and pass an extra int when switching fragments to check if the users want the favorites or all the jokes
      * You can see it belown in the setUp method
@@ -48,13 +74,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setUp(savedInstanceState);
 
-        manager = getFragmentManager();
+        //RegisterAlarmBroadcast();
+
+
+        manager = getSupportFragmentManager();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         listMode = sharedPreferences.getBoolean("list_mode",true);
         /**
          * Showing the home screen
          */
-
+     //x   alarmManager.set( AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000 , pendingIntent );
 
 
         Fragment a;
@@ -66,6 +95,71 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null)
             manager.beginTransaction().add(R.id.fragment_container,a,"HOME").addToBackStack(null).commit();
+
+
+    }
+
+    private void RegisterAlarmBroadcast() {
+
+        IntentFilter filter = new IntentFilter("com.stairsapps.elohel.alarm");
+        filter.addAction("FAVORITE");
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                SQLController helper = new SQLController(context);
+                try {
+                    helper.open();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                Joke joke = helper.getJoke(new Random().nextInt(helper.getMaxId()));
+
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+                Intent resultIntent = new Intent(context, MainActivity.class);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                stackBuilder.addParentStack(MainActivity.class);
+
+
+
+                NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
+                bigStyle.setBigContentTitle(joke.getCategory());
+                bigStyle.bigText(unescape(joke.getJoke()));
+
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.ic_launcher)
+                                .setContentTitle("El Oh El").setAutoCancel(true)
+                                .setPriority(Notification.PRIORITY_LOW)
+                                .setStyle(bigStyle)
+                                .addAction(R.drawable.ic_favorite_black_48dp,"Favorite",pendingIntent)
+                                .setContentText(unescape(joke.getJoke()));
+
+
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                mBuilder.setContentIntent(resultPendingIntent);
+
+                if(intent.getAction().equals("FAVORITE"))
+                    Log.i("tag","fa");
+                else
+                    Log.i("tag","no");
+                mNotificationManager.notify(999, mBuilder.build());
+
+
+
+
+            }
+        };
+
+        registerReceiver(mReceiver,filter);
+        pendingIntent = PendingIntent.getBroadcast(this,0,new Intent("com.stairsapps.elohel.alarm"),0);
+        alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
 
     }
@@ -152,7 +246,7 @@ public class MainActivity extends ActionBarActivity {
         if (result != null && result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
-            JokesSimple jk = (JokesSimple) manager.findFragmentByTag("HOME");
+            Fragment jk = manager.findFragmentByTag("HOME");
             if(jk!=null && jk.isVisible()) {
                 finish();
             }
@@ -183,6 +277,21 @@ public class MainActivity extends ActionBarActivity {
         listMode = sharedPreferences.getBoolean("list_mode",true);
     }
 
+    private void UnregisterAlarmBroadcast()
+    {
+        alarmManager.cancel(pendingIntent);
+        getBaseContext().unregisterReceiver(mReceiver);
+    }
 
+    @Override
+    protected void onDestroy() {
+//        unregisterReceiver(mReceiver);
+        super.onDestroy();
+
+    }
+
+    private String unescape(String description) {
+        return description.replaceAll("\\\\n", "\\\n");
+    }
 
 }
