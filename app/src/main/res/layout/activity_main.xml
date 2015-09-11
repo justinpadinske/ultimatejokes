@@ -14,7 +14,11 @@
         android:layout_below="@+id/app_bar">
 
     </FrameLayout>
-
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/mopub_sample_ad"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"/>
 
 
 </RelativeLayout>
