@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
+import com.stairsapps.elohel.MainActivity;
 import com.stairsapps.elohel.R;
 
 
@@ -14,6 +15,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+        ((MainActivity) getActivity()).setActionBarTitle("Settings");;
 
     }
 

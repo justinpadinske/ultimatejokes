@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import com.mopub.mobileads.MoPubView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -52,8 +51,6 @@ public class MainActivity extends ActionBarActivity {
     private FragmentManager manager;
     private SharedPreferences sharedPreferences;
     private boolean listMode;
-    private static final String MOPUB_BANNER_AD_UNIT_ID = "b7a77f61cf9a4f53a2955d993fb761fb";
-    private MoPubView moPubView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +59,6 @@ public class MainActivity extends ActionBarActivity {
         setUp(savedInstanceState);
 
 
-        moPubView = (MoPubView) findViewById(R.id.mopub_sample_ad);
-        moPubView.setAdUnitId(MOPUB_BANNER_AD_UNIT_ID);
-        moPubView.loadAd();
 
         manager = getSupportFragmentManager();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -103,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
                         new PrimaryDrawerItem().withName("Jokes").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Favorites").withIdentifier(1).withIcon(R.drawable.ic_favorite_black_48dp),
-                        new PrimaryDrawerItem().withName("Purpose a joke").withIdentifier(2).withIcon(R.drawable.ic_insert_emoticon_black_48dp),
+                        new PrimaryDrawerItem().withName("Propose a joke").withIdentifier(2).withIcon(R.drawable.ic_insert_emoticon_black_48dp),
                         new PrimaryDrawerItem().withName("Settings").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
         )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -193,7 +187,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        moPubView.destroy();
         super.onDestroy();
 
     }

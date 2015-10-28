@@ -5,7 +5,6 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.mopub.common.MoPub;
 import com.stairsapps.elohel.R;
 
 
@@ -24,7 +23,7 @@ public class ApplicationClass extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics(), new MoPub());
+        Fabric.with(this, new Crashlytics());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/Roboto-Regular.ttf")
                         .setFontAttrId(R.attr.fontPath)
