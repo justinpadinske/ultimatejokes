@@ -29,7 +29,10 @@ public class ApplicationClass extends Application {
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
+
     }
+
+
 
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {

@@ -23,7 +23,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 
+import com.appodeal.ads.Appodeal;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -53,16 +55,32 @@ public class MainActivity extends ActionBarActivity {
     private boolean listMode;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Appodeal.onResume(this, Appodeal.BANNER);
+        Appodeal.show(MainActivity.this, Appodeal.BANNER_BOTTOM);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         setUp(savedInstanceState);
 
 
-
         manager = getSupportFragmentManager();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        listMode = sharedPreferences.getBoolean("list_mode",true);
+        listMode = sharedPreferences.getBoolean("list_mode", true);
+
+
+
+        String appKey = "1117f5ff6bdb98d55c1dcf22c210ae240405c89c96f4bd61";
+        Appodeal.disableLocationPermissionCheck();
+        Appodeal.initialize(this, appKey, Appodeal.BANNER);
+
+
+
         /**
          * Showing the home screen
          */

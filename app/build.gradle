@@ -25,6 +25,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -37,7 +38,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.0'
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'de.hdodenhof:circleimageview:1.2.1'
@@ -50,10 +52,18 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.android.support:cardview-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
-    compile 'com.google.android.gms:play-services-analytics:7.3.0'
+    compile 'com.google.android.gms:play-services:7.3.0'
     compile 'jp.wasabeef:recyclerview-animators:1.2.3'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
     compile 'com.squareup.okhttp:okhttp:2.5.0'
+
+    compile files('D:/ultimatejokes/libs/appodeal-1.13.7.jar')
+    compile files('D:/ultimatejokes/libs/applovin-6.1.4.jar')
+    compile files('D:/ultimatejokes/libs/inmobi-5.0.1.jar')
+    compile files('D:/ultimatejokes/libs/chartboost-5.5.3.jar')
+    compile files('D:/ultimatejokes/libs/my-target-4.1.1.jar')
+    compile files('D:/ultimatejokes/libs/unity-ads-1.4.7.jar')
+    compile files('D:/ultimatejokes/libs/yandex-metrica-android-2.00.jar')
 }
