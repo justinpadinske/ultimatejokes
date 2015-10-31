@@ -1,5 +1,6 @@
 package com.stairsapps.elohel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -15,8 +16,13 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        ((MainActivity) getActivity()).setActionBarTitle("Settings");;
+        try {
+            ((MainActivity) getActivity()).setActionBarTitle("Settings");
 
+        }catch (Exception e){
+            Intent i = new Intent(getContext(),MainActivity.class);
+            startActivity(i);
+        }
     }
 
 

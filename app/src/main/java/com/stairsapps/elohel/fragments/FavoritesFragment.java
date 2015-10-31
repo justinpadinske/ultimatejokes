@@ -33,6 +33,7 @@ public class FavoritesFragment extends JokesLV{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         ApplicationClass app = (ApplicationClass) getActivity().getApplication();
         mTracker = app.getDefaultTracker();
         mTracker.setScreenName("Jokes Favorites");

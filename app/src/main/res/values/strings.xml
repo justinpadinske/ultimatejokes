@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">El Oh El</string>
+    <string name="app_name">eL Oh eL</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,11 +8,6 @@
     <string name="favorite">Favorite</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string-array name="test">
-        <item>Test1</item>
-        <item>Test2</item>
-        <item>Test3</item>
-    </string-array>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="description_zoom_touch_close">Expanded image (touch to close)</string>
