@@ -1,6 +1,7 @@
 package com.stairsapps.elohel.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -10,7 +11,7 @@ import com.stairsapps.elohel.R;
 
 
 
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,11 @@ public class SettingsFragment extends PreferenceFragment {
             Intent i = new Intent(getContext(),MainActivity.class);
             startActivity(i);
         }
+
     }
 
-
-
-
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        ((MainActivity) getActivity()).updateAds();
+    }
 }

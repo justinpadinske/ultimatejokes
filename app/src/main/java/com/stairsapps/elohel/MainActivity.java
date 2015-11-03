@@ -53,12 +53,13 @@ public class MainActivity extends ActionBarActivity {
     private FragmentManager manager;
     private SharedPreferences sharedPreferences;
     private boolean listMode;
+    private boolean ads_mode;
 
     @Override
     protected void onResume() {
         super.onResume();
         Appodeal.onResume(this, Appodeal.BANNER);
-        Appodeal.show(MainActivity.this, Appodeal.BANNER_BOTTOM);
+        updateAds();
     }
 
     @Override
@@ -72,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
         manager = getSupportFragmentManager();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         listMode = sharedPreferences.getBoolean("list_mode", true);
+        ads_mode = sharedPreferences.getBoolean("ads_mode",true);
 
 
 
@@ -130,17 +132,21 @@ public class MainActivity extends ActionBarActivity {
                                 }else {
                                     a = new JokesSimple();
                                 }
+                                updateAds();
                                 manager.beginTransaction().replace(R.id.fragment_container, a,"HOME").commit();
                                 break;
                             case 1:
                                 updateListMode();
                                 FavoritesFragment j = new FavoritesFragment();
+                                updateAds();
                                 manager.beginTransaction().replace(R.id.fragment_container, j).commit();
                                 break;
                             case 2:
+                                updateAds();
                                 manager.beginTransaction().replace(R.id.fragment_container,new JokePurpose()).commit();
                                 break;
                             case  3:
+                                updateAds();
                                 manager.beginTransaction().replace(R.id.fragment_container,new SettingsFragment()).commit();
                                 break;
 
@@ -207,6 +213,15 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    public void updateAds(){
+        ads_mode = sharedPreferences.getBoolean("ads_mode",true);
+        if(ads_mode){
+            Appodeal.hide(this,Appodeal.BANNER_BOTTOM);
+        }else if(ads_mode==true){
+            Appodeal.show(this,Appodeal.BANNER_BOTTOM);
+        }
     }
 
     private String unescape(String description) {
