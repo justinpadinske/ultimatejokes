@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.appodeal.ads.Appodeal;
+import com.google.android.gms.ads.AdRequest;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -59,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         Appodeal.onResume(this, Appodeal.BANNER);
+
         updateAds();
     }
 
