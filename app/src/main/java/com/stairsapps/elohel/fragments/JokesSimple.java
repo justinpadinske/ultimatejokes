@@ -4,6 +4,7 @@ package com.stairsapps.elohel.fragments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -32,11 +33,13 @@ import com.stairsapps.elohel.extra.OnSwipeTouchListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 
 public class JokesSimple extends Fragment {
 
     private ArrayList<Joke> mJokes;
+    private String[] colors;
     private int mPosition = 0;
     private TextSwitcher mTextSwitcher;
     private SQLController dbcon;
@@ -59,6 +62,8 @@ public class JokesSimple extends Fragment {
         mTracker = app.getDefaultTracker();
         mTracker.setScreenName("Jokes Simple");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        colors = new String[0];
+        colors = getResources().getStringArray(R.array.back_colors);
     }
 
     @Override
@@ -152,6 +157,8 @@ public class JokesSimple extends Fragment {
         mTextSwitcher.setText(unescape(mJokes.get(mPosition).getJoke()));
         setFavoriteIcon();
         mProgress.setProgress(mPosition);
+        changeBackground();
+
     }
 
     //Change to previous joke
@@ -243,6 +250,16 @@ public class JokesSimple extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void changeBackground(){
+        RelativeLayout relativeLayout = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout);
+        relativeLayout.setBackgroundColor(Color.parseColor(colors[randomId(colors.length)]));
+    }
+
+    public int randomId(int length){
+        return new Random().nextInt(length);
+    }
+
     public void setFavoriteIcon(){
         if(mJokes.get(mPosition).isFavoriteStatus()) {
             menu.getItem(2).setIcon(R.drawable.ic_favorite_white_48dp);

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">eL Oh eL</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="share">Share</string>
@@ -11,4 +10,10 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="description_zoom_touch_close">Expanded image (touch to close)</string>
+    <string-array name="back_colors">
+            <item>red</item>
+            <item>blue</item>
+            <item>blue</item>
+            <item>blue</item>
+    </string-array>
 </resources>
