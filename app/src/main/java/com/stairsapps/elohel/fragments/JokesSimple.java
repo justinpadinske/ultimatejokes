@@ -39,7 +39,6 @@ import java.util.Random;
 public class JokesSimple extends Fragment {
 
     private ArrayList<Joke> mJokes;
-    private String[] colors;
     private int mPosition = 0;
     private TextSwitcher mTextSwitcher;
     private SQLController dbcon;
@@ -62,8 +61,7 @@ public class JokesSimple extends Fragment {
         mTracker = app.getDefaultTracker();
         mTracker.setScreenName("Jokes Simple");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        colors = new String[0];
-        colors = getResources().getStringArray(R.array.back_colors);
+
     }
 
     @Override
@@ -157,7 +155,7 @@ public class JokesSimple extends Fragment {
         mTextSwitcher.setText(unescape(mJokes.get(mPosition).getJoke()));
         setFavoriteIcon();
         mProgress.setProgress(mPosition);
-        changeBackground();
+
 
     }
 
@@ -251,10 +249,6 @@ public class JokesSimple extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeBackground(){
-        RelativeLayout relativeLayout = (RelativeLayout) getActivity().findViewById(R.id.relativeLayout);
-        relativeLayout.setBackgroundColor(Color.parseColor(colors[randomId(colors.length)]));
-    }
 
     public int randomId(int length){
         return new Random().nextInt(length);

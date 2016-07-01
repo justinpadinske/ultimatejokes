@@ -51,13 +51,8 @@ public class JokesLV extends Fragment {
         super.onActivityCreated(savedInstanceState);
         databaseSetUp();
         ((MainActivity) getActivity()).setActionBarTitle("All");
-
         LinearLayoutManager llm = new LinearLayoutManager(this.getActivity());
         rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
-
-
-
     }
 
     public void databaseSetUp() {
