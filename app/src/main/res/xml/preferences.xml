@@ -9,12 +9,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ></SwitchPreference>
-    <SwitchPreference
-        android:title="Ads"
-        android:summary="Please enable ads to support us"
-        android:key="ads_mode"
-        android:defaultValue="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ></SwitchPreference>
+
 </PreferenceScreen>
