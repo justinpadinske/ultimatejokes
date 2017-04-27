@@ -45,7 +45,6 @@ public class JokesSimple extends Fragment {
     private RelativeLayout relativeLayout;
     private Menu menu;
     private ProgressBar mProgress;
-    private Tracker mTracker;
 
 //    private String TAG = getActivity().getPackageName();
 
@@ -57,10 +56,6 @@ public class JokesSimple extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ApplicationClass app = (ApplicationClass) getActivity().getApplication();
-        mTracker = app.getDefaultTracker();
-        mTracker.setScreenName("Jokes Simple");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
 
@@ -208,7 +203,7 @@ public class JokesSimple extends Fragment {
             categories = dbcon.getCategories().toArray(categories);
             //Creating the AlertDialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Select a category");
+            builder.setTitle("Alege categoria");
             final String[] finalCategories = categories;
             builder.setItems(categories, new DialogInterface.OnClickListener() {
                 @Override
@@ -227,11 +222,8 @@ public class JokesSimple extends Fragment {
             case R.id.share:
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, unescape(mJokes.get(mPosition).getJoke()) + " - Shared via El Oh El");
-                startActivity(Intent.createChooser(shareIntent, "Share the joke"));
-                Answers.getInstance().logShare(new ShareEvent()
-                        .putContentId(String.valueOf(mJokes.get(mPosition).getId()))
-                        .putContentType(mJokes.get(mPosition).getCategory()));
+                shareIntent.putExtra(Intent.EXTRA_TEXT, unescape(mJokes.get(mPosition).getJoke()) + " - El Oh El");
+                startActivity(Intent.createChooser(shareIntent, "Partajare glume"));
                 break;
             case R.id.favorite:
                 if(mJokes.get(mPosition).isFavoriteStatus()) {

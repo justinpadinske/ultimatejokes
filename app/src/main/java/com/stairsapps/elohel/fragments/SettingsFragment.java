@@ -18,7 +18,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         try {
-            ((MainActivity) getActivity()).setActionBarTitle("Settings");
+            ((MainActivity) getActivity()).setActionBarTitle("Setari");
 
         }catch (Exception e){
             Intent i = new Intent(getContext(),MainActivity.class);

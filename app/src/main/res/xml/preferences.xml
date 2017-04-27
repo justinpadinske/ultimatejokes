@@ -2,12 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:title="Layout"
-        android:summary="Show the jokes in a list"
-        android:key="list_mode"
-        android:defaultValue="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ></SwitchPreference>
+        android:defaultValue="true"
+        android:key="list_mode"
+        android:summary="Afiseaza glumele in mod lista"
+        android:title="Afisare"></SwitchPreference>
 
 </PreferenceScreen>

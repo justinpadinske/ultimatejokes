@@ -35,7 +35,7 @@ public class JokesLV extends Fragment {
     protected SQLController dbcon;
     protected RecyclerView rv;
     protected ArrayList<Joke> jokes;
-    Tracker mTracker;
+
     private Menu menu;
 
     @Override
@@ -72,10 +72,6 @@ public class JokesLV extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ApplicationClass app = (ApplicationClass) getActivity().getApplication();
-        mTracker = app.getDefaultTracker();
-        mTracker.setScreenName("Jokes ListView");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
     }
 
@@ -104,7 +100,7 @@ public class JokesLV extends Fragment {
                 categories = dbcon.getCategories().toArray(categories);
                 //Creating the AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select a category");
+                builder.setTitle("Alege categoria");
                 final String[] finalCategories = categories;
                 builder.setItems(categories, new DialogInterface.OnClickListener() {
                     @Override

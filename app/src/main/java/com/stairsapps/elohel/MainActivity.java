@@ -102,11 +102,11 @@ public class MainActivity extends ActionBarActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Jokes").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
+                        new PrimaryDrawerItem().withName("Glume").withIdentifier(0).withIcon(R.drawable.ic_home_black_48dp),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Favorites").withIdentifier(1).withIcon(R.drawable.ic_favorite_black_48dp),
-                        new PrimaryDrawerItem().withName("Propose a joke").withIdentifier(2).withIcon(R.drawable.ic_insert_emoticon_black_48dp),
-                        new PrimaryDrawerItem().withName("Settings").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
+                        new PrimaryDrawerItem().withName("Favorite").withIdentifier(1).withIcon(R.drawable.ic_favorite_black_48dp),
+                        new PrimaryDrawerItem().withName("Propune o gluma").withIdentifier(2).withIcon(R.drawable.ic_insert_emoticon_black_48dp),
+                        new PrimaryDrawerItem().withName("Setari").withIdentifier(3).withIcon(R.drawable.ic_settings_black_48dp)
         )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

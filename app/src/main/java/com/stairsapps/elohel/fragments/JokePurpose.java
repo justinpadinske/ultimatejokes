@@ -54,7 +54,6 @@ public class JokePurpose extends Fragment {
     public static final String NAME_KEY="entry.841618648";
     public static final String EMAIL_KEY="entry.207141387";
     public static final String JOKE_KEY="entry.1012434953";
-    private Tracker mTracker;
 
     private Context context;
     public JokePurpose() {
@@ -67,10 +66,6 @@ public class JokePurpose extends Fragment {
         context = getActivity();
 
 
-        ApplicationClass app = (ApplicationClass) getActivity().getApplication();
-        mTracker = app.getDefaultTracker();
-        mTracker.setScreenName("Jokes Purprose");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +75,7 @@ public class JokePurpose extends Fragment {
                 if (TextUtils.isEmpty(mEmail.getText().toString()) ||
                         TextUtils.isEmpty(mName.getText().toString()) ||
                         TextUtils.isEmpty(mJoke.getText().toString())) {
-                    Toast.makeText(context, "All fields are mandatory.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Toate campurile sunt obligatorii", Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Check if a valid email is entered
@@ -161,7 +156,7 @@ public class JokePurpose extends Fragment {
         @Override
         protected void onPostExecute(Boolean result){
             //Print Success or failure message accordingly
-            Toast.makeText(context,result?"Joke successfully sent!":"There was some error in sending message. Please try again after some time.",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,result?"Gluma a fost trimisa cu succes!":"Ooops! A aparut o eroare!",Toast.LENGTH_LONG).show();
         }
     }
 }

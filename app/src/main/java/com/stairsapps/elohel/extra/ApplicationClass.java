@@ -17,13 +17,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class ApplicationClass extends Application {
 
 
-    private Tracker mTracker;
+    ;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/Roboto-Regular.ttf")
                         .setFontAttrId(R.attr.fontPath)
@@ -34,14 +34,6 @@ public class ApplicationClass extends Application {
 
 
 
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.global_tracker);
-        }
-        return mTracker;
-    }
 
 
 }

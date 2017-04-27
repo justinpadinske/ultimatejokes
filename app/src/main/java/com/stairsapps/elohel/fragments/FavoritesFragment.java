@@ -26,7 +26,7 @@ public class FavoritesFragment extends JokesLV{
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem item = menu.findItem(R.id.sort);
         item.setVisible(false);
-        ((MainActivity) getActivity()).setActionBarTitle("Favorites");;
+        ((MainActivity) getActivity()).setActionBarTitle("Favorite");;
     }
 
     @Override
@@ -34,10 +34,6 @@ public class FavoritesFragment extends JokesLV{
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ApplicationClass app = (ApplicationClass) getActivity().getApplication();
-        mTracker = app.getDefaultTracker();
-        mTracker.setScreenName("Jokes Favorites");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
